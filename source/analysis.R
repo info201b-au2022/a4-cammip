@@ -62,17 +62,27 @@ plot_jail_pop_for_us()
 # Growth of Prison Population by State 
 # Your functions might go here ... <todo:  update comment>
 # See Canvas
+
 get_jail_pop_by_states <- function(states) {
   population_states <- incarceration_trends %>%
-    select(year, state, county_name, total_jail_pop) 
+    select(year, state, total_jail_pop) %>%
+    group_by(year, state) %>%
+    summarize(jail_population = sum(total_jail_pop, na.rm = T))
+  #cleans data frame to combine state data
   
-  
-  return(population_states)
+  population <- filter(population_states, state == states)
+  #filters data frame based on function parameter
+  return(population)
 }
 
-plot_jail_pop_by_states <- function() {
-  
+plot_jail_pop_by_states <- function(states) {
+  ggplot(data = get_jail_pop_by_states(states)) +
+    #calls function to get the data used for the plot
+    geom_line (
+      mapping = aes(x = year, y = jail_population, color = states)
+)
 }
+plot_jail_pop_by_states(c("AZ", "WA"))
 
 #----------------------------------------------------------------------------#
 
