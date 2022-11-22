@@ -79,7 +79,7 @@ plot_jail_pop_by_states <- function(states) {
   ggplot(data = get_jail_pop_by_states(states)) +
     #calls function to get the data used for the plot
     geom_line (
-      mapping = aes(x = year, y = jail_population, color = states)
+      mapping = aes(x = year, y = jail_population, group = states, color = states)
 )
 }
 plot_jail_pop_by_states(c("AZ", "WA"))
@@ -92,6 +92,30 @@ plot_jail_pop_by_states(c("AZ", "WA"))
 # Your functions might go here ... <todo:  update comment>
 # See Canvas
 #----------------------------------------------------------------------------#
+get_data <- function(){
+  
+}
+new_df <- incarceration_trends %>% 
+  select(year, black_pop_15to64, white_pop_15to64,
+         region, black_jail_pop, white_jail_pop) %>%
+  group_by(year, region) %>%
+  
+  summarize(black_prop = sum(black_pop_15to64, na.rm = T),
+            white_prop = sum(white_pop_15to64, na.rm = T),
+            white = sum(white_jail_pop, na.rm = T),
+            black = sum(black_jail_pop, na.rm = T)) %>%
+  filter(year == "2018") %>%
+  
+  mutate(black_prop = black / black_prop,
+         white_prop = white / white_prop)
+
+View(new_df)
+
+ggplot(data = new_df) +
+  geom_col(mapping = aes(x = region, y = black_prop))
+
+ggplot(data = new_df) +
+  geom_col(mapping = aes(x = region, y = white_prop))
 
 ## Section 6  ---- 
 #----------------------------------------------------------------------------#
