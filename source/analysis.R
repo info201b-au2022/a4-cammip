@@ -1,4 +1,6 @@
 library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
 incarceration_trends <- read.csv(
   file = "https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv",
@@ -10,21 +12,6 @@ View(incarceration_trends)
 # The functions might be useful for A4
 source("../source/a4-helpers.R")
 
-## Test queries ----
-#----------------------------------------------------------------------------#
-# Simple queries for basic testing
-#----------------------------------------------------------------------------#
-# Return a simple string
-test_query1 <- function() {
-  return ("Hello world")
-}
-
-# Return a vector of numbers
-test_query2 <- function(num=6) {
-  v <- seq(1:num)
-  return(v)
-}
-
 ## Section 2  ---- 
 #----------------------------------------------------------------------------#
 # Your functions and variables might go here ... <todo: update comment>
@@ -35,10 +22,6 @@ test_query2 <- function(num=6) {
 # Growth of the U.S. Prison Population
 # Your functions might go here ... <todo:  update comment>
 #----------------------------------------------------------------------------#
-# This function ... <todo:  update comment>
-
-library(dplyr)
-library(ggplot2)
 
 get_year_jail_pop <- function() {
   pop_df <- incarceration_trends %>%
@@ -68,21 +51,18 @@ get_jail_pop_by_states <- function(states) {
     select(year, state, total_jail_pop) %>%
     group_by(year, state) %>%
     summarize(jail_population = sum(total_jail_pop, na.rm = T))
-  #cleans data frame to combine state data
   
   population <- filter(population_states, state == states)
-  #filters data frame based on function parameter
   return(population)
-}
+  }
 
 plot_jail_pop_by_states <- function(states) {
   ggplot(data = get_jail_pop_by_states(states)) +
-    #calls function to get the data used for the plot
     geom_line (
       mapping = aes(x = year, y = jail_population, group = states, color = states)
 )
 }
-plot_jail_pop_by_states(c("AZ", "WA"))
+plot_jail_pop_by_states(c("WA"))
 
 #----------------------------------------------------------------------------#
 
@@ -93,29 +73,26 @@ plot_jail_pop_by_states(c("AZ", "WA"))
 # See Canvas
 #----------------------------------------------------------------------------#
 get_data <- function(){
-  
+  new_df <- incarceration_trends %>% 
+    select(year, black_pop_15to64, white_pop_15to64,
+           region, black_jail_pop, white_jail_pop) %>%
+    group_by(year, region) %>%
+    summarize(black_prop = sum(black_pop_15to64, na.rm = T),
+              white_prop = sum(white_pop_15to64, na.rm = T),
+              white = sum(white_jail_pop, na.rm = T),
+              black = sum(black_jail_pop, na.rm = T)) %>%
+    filter(year == "2018") %>%
+    mutate(black_prop = black / black_prop,
+           white_prop = white / white_prop) %>%
+    gather(key = "race", value = "proportion", 3:4)
+  return(new_df)
 }
-new_df <- incarceration_trends %>% 
-  select(year, black_pop_15to64, white_pop_15to64,
-         region, black_jail_pop, white_jail_pop) %>%
-  group_by(year, region) %>%
-  
-  summarize(black_prop = sum(black_pop_15to64, na.rm = T),
-            white_prop = sum(white_pop_15to64, na.rm = T),
-            white = sum(white_jail_pop, na.rm = T),
-            black = sum(black_jail_pop, na.rm = T)) %>%
-  filter(year == "2018") %>%
-  
-  mutate(black_prop = black / black_prop,
-         white_prop = white / white_prop)
 
-View(new_df)
-
-ggplot(data = new_df) +
-  geom_col(mapping = aes(x = region, y = black_prop))
-
-ggplot(data = new_df) +
-  geom_col(mapping = aes(x = region, y = white_prop))
+plot_prop_data <- function(){
+  ggplot(data = get_data()) +
+    geom_col(aes(x = region, y = proportion, fill = race, color = race),
+             position = position_dodge())
+}
 
 ## Section 6  ---- 
 #----------------------------------------------------------------------------#
