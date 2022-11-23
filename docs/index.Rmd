@@ -13,21 +13,16 @@ source("../source/analysis.R")
 ## Abstract 
 Include a short abstract (about 50 words)
 
-```{r}
-#ctrl + alt + i 
-```
-
-```{r echo = F}
-num <- 5
-sum <- sum(num + 6)
-print(sum)
-```
-
 ## Section 1: Introduction 
 [TODO]
 
 ## Section 2: Data Summary 
-[TODO]
+```{r}
+highest_race()
+highest_state()
+wa_highest_county()
+```
+
 
 ## Section 3: Growth of the U.S. Prison Population
 ```{r echo = F}
@@ -41,11 +36,9 @@ plot_jail_pop_by_states(c("AZ"))
 ```
 
 ## Section 5: <variable comparison that reveals potential patterns of inequality>
-```{r echo = F, include = F}
+```{r echo = F}
 plot_prop_data()
 ```
-
-
 
 ## Section 6: <a map shows potential patterns of inequality that vary geographically>
 [TODO]
