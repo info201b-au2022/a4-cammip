@@ -5,7 +5,7 @@ date: '2022-11-09'
 output: html_document
 ---
 
-```{r echo=FALSE, eval=TRUE, message=FALSE}
+```{r echo = FALSE, eval = TRUE, message = F}
 source("../source/a4-helpers.R")
 source("../source/analysis.R")
 ```
@@ -14,13 +14,32 @@ source("../source/analysis.R")
 This report exposes **patterns of inequality** in incarceration data through data wrangling and data visualizations. The issue this report will focus on is the unfair treatment of people of color and the unjust system/structures that lead to the unfair treatment. This issue is important because the iSchool has a very diverse body of students, so any student/faculty member could be affected by these patterns of inequality.
 
 ## Section 1: Introduction 
-This report will analyze data on **incarceration**. The data used in this report has been collected by the _Vera Institute._ The data I will use is titled _incarceration_trends.csv,_ which can be found on the Vera Institute’s Github repository. The data collected contains detailed variables about the population and jail population in each state, along with the counties in each state. The Vera Institute collected this data because it has the goal of disrupting and terminating unjust, racist systems that affect unjust criminalization of immigrants, people of color, and the economically disadvantaged. By using the data collected by the Vera Institute, I will use data analysis and visualization skills to display patterns of inequality in the data. One main pattern that is expected to be revealed in the data is the disproportionate incarceration of people of color. There are many different factors that lead to this issue, which all stem from **racism** and prejudice. 
+This report will analyze data on **incarceration**. The data used in this report has been collected by the _Vera Institute._ The data I will use is titled _incarceration_trends.csv,_ which can be found on the Vera Institute’s Github repository. The data collected contains detailed variables about the population and jail population in each state, along with the counties in each state. The Vera Institute collected this data because it has the goal of disrupting and terminating unjust, racist systems that affect unjust criminalization of immigrants, people of color, and the economically disadvantaged. By using the data collected by the Vera Institute, I will use data analysis and visualization skills to display patterns of inequality in the data. One main pattern that is expected to be revealed in the data is the disproportionate incarceration of people of color. There are many different factors that lead to this issue, which all stem from **racism** and prejudice.
 
 ## Section 2: Data Summary 
+In the data, I have found three values and answer these questions:
+
+* Which race has the highest jail proportion as of the most recent year?
+
+I created a function called highest_race(), which calculated the race with the highest prison proportion in the United States. Instead of finding the race with the highest prison population, I decided to work with proportions since there is not an equal distribution of residents of different races in each state. The main benefit of using proportions is that proportions take population difference into account. The highest_race() function found that black individuals had the highest jail proportion.
 ```{r}
 highest_race()
+```
+
+* Which state has the highest jail proportion of the race found in the last question?
+
+Using the result from the question above, I created the highest_state() function to find the state with the highest proportion of black people in jail. The result showed that Wyoming was the state with the highest black jail proportion. 
+```{r}
 highest_state()
-wa_highest_county()
+```
+
+
+* What county in the state found above has the highest jail proportion of black individuals?
+
+In the question above, the results showed that Wyoming had the highest proportion of black people in jail. To dig deeper, I created another function that found the county in Wyoming with the highest proportion, which came out to be Natrona County. After doing further research, I found that Natrona County is considered the "poorest" county in Wyoming (Rossi, 2022). 
+
+```{r}
+highest_county()
 ```
 
 
@@ -29,18 +48,27 @@ wa_highest_county()
 plot_jail_pop_for_us()
 ```
 
+This bar chart shows the growth of the U.S. prison population from the year 1970 to 2018. By looking at the bar chart, you can see that the prison population remains stable from 1970 to around 1978, before the bars on the graph gradually increase from 1980 and never decreases until 2008.
 
 ## Section 4: Growth of Prison Population by State 
-```{r echo = F}
-plot_jail_pop_by_states(c("AZ"))
+```{r echo = F, message = F}
+plot_jail_pop_by_states(c("WY"))
 ```
 
-## Section 5: <variable comparison that reveals potential patterns of inequality>
-```{r echo = F}
+This line chart shows the growth of the U.S. prison population from 1970 to 2018 for specific states. Currently, the state included in the line chart is Wyoming. By looking at the chart, you can see that there is an increase in the prison population between the years 1970 and 1990. Then, there is a small decrease from 1990 to around 1993, before a large increase. 
+
+## Section 5: Comparison of Jail Proportions in Each Region
+```{r echo = F, message = F}
 plot_prop_data()
 ```
+
+This grouped bar chart compares the jail proportion of Black and White people in each region. The graph clearly shows that in every region, there is a higher proportion of Black individuals in jail compared to White individuals. In the West, 0.9% of Black people are incarcerated, while 0.2% of White people are incarcerated. 
 
 ## Section 6: <a map shows potential patterns of inequality that vary geographically>
 [TODO]
 
+
+## Resources:
+
+Rossi, A. Forbes Marks Natrona County As The Poorest County in Wyoming. (2022). Big Horn Radio Network. https://mybighornbasin.com/forbes-marks-natrona-county-as-poorest-county-in-wyoming/ 
 

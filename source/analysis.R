@@ -14,7 +14,7 @@ source("../source/a4-helpers.R")
 
 #Which race has the highest jail proportion as of the most recent year?
 #Which state has the highest jail proportion of the race found in the last question?
-#What county in Washington state has the highest jail population?
+#What county in the state found above has the highest jail population?
 
 highest_prop_df <- incarceration_trends %>%
   select(year, state, aapi_pop_15to64, black_pop_15to64, latinx_pop_15to64,
@@ -64,15 +64,14 @@ highest_state <- function() {
 } #This function finds the state with the highest jail proportion 
 #of the race found in the function above
 
-wa_highest_county <- function() {
-  wa_counties <- incarceration_trends %>%
-    filter(year == 2018, state == "WA") %>%
+highest_county <- function() {
+  wy_counties <- incarceration_trends %>%
+    filter(year == 2018, state == highest_state()) %>%
     select(county_name, total_jail_pop) %>%
     filter(total_jail_pop == max(total_jail_pop)) %>%
     pull(county_name)
-  return(wa_counties)
-} #This function finds the county in WA with the highest jail population
-
+  return(wy_counties)
+} #This function finds the county in WY with the highest jail population
 #----------------------------------------------------------------------------#
 
 ## Section 3  ---- 
@@ -88,7 +87,8 @@ get_year_jail_pop <- function() {
 plot_jail_pop_for_us <- function()  {
   data <- get_year_jail_pop()
   chart <- ggplot(data = data) +
-    geom_col(mapping = aes(x = year, y = total_pop))
+    geom_col(mapping = aes(x = year, y = total_pop)) +
+    labs(caption = "Growth of the U.S. prison population from 1970 to 2018")
   return(chart)
 } 
 plot_jail_pop_for_us()
@@ -111,10 +111,9 @@ get_jail_pop_by_states <- function(states) {
 plot_jail_pop_by_states <- function(states) {
   ggplot(data = get_jail_pop_by_states(states)) +
     geom_line (
-      mapping = aes(x = year, y = jail_population, group = states, color = states)
-)
+      mapping = aes(x = year, y = jail_population, group = states, color = states)) +
+    labs(caption = "Growth of Prison Population by State")
 }
-plot_jail_pop_by_states(c("WA"))
 #----------------------------------------------------------------------------#
 
 ## Section 5  ---- 
@@ -138,7 +137,10 @@ get_data <- function(){
 plot_prop_data <- function(){
   ggplot(data = get_data()) +
     geom_col(aes(x = region, y = proportion, fill = race, color = race),
-             position = position_dodge()) }
+             position = position_dodge()) +
+    labs(caption = "Comparison between black jail proportion and white jail proportion")
+}
+
 #----------------------------------------------------------------------------#
 
 ## Section 6  ---- 
@@ -162,7 +164,7 @@ ggplot(state_shape) +
   geom_polygon(
     mapping = aes(x = long, y = lat, group = group),
     color = "white", # show state outlines
-    size = .1        # thinly stroked
+    linewidth = .1        # thinly stroked
 ) + coord_map()
 
 
