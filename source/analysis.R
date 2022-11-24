@@ -84,7 +84,7 @@ get_year_jail_pop <- function() {
     group_by(year) %>%
     summarize(total_pop = sum(total_jail_pop, na.rm = T))
   return(pop_df) 
-}
+} #Data wrangling function
 
 plot_jail_pop_for_us <- function()  {
   data <- get_year_jail_pop()
@@ -92,14 +92,13 @@ plot_jail_pop_for_us <- function()  {
     geom_col(mapping = aes(x = year, y = total_pop)) +
     labs(caption = "Growth of the U.S. prison population from 1970 to 2018")
   return(chart)
-} 
-plot_jail_pop_for_us()
+} #Plotting function
+
 #----------------------------------------------------------------------------#
 
 ## Section 4  ---- 
 #----------------------------------------------------------------------------#
 # Growth of Prison Population by State 
-
 get_jail_pop_by_states <- function(states) {
   population_states <- incarceration_trends %>%
     select(year, state, total_jail_pop) %>%
@@ -108,14 +107,14 @@ get_jail_pop_by_states <- function(states) {
   
   population <- filter(population_states, state == states)
   return(population)
-  }
+  } #Data wrangling function for line chart
 
 plot_jail_pop_by_states <- function(states) {
   ggplot(data = get_jail_pop_by_states(states)) +
     geom_line (
       mapping = aes(x = year, y = jail_population, group = states, color = states)) +
     labs(caption = "Growth of Prison Population by State")
-}
+} #Plotting function
 #----------------------------------------------------------------------------#
 
 ## Section 5  ---- 
@@ -134,14 +133,14 @@ get_data <- function(){
            white_prop = white / white_prop) %>%
     gather(key = "race", value = "proportion", 3:4)
   return(new_df)
-}
+} #Data wrangling function
 
 plot_prop_data <- function(){
   ggplot(data = get_data()) +
     geom_col(aes(x = region, y = proportion, fill = race, color = race),
              position = position_dodge()) +
     labs(caption = "Comparison between black jail proportion and white jail proportion")
-}
+} #Plotting function
 
 #----------------------------------------------------------------------------#
 
@@ -159,7 +158,7 @@ get_state_data <- function() {
     select(-state) %>%
     left_join(wy_df, by = "county_name")
   return(counties_shape)
-}
+} #Data wrangling function for map
 
 plot_wy_data <- function() {
   ggplot(get_state_data()) +
@@ -171,6 +170,6 @@ plot_wy_data <- function() {
     scale_fill_continuous(low = "132B43", high = "Red") +
     labs(fill = "Proportion") +
     labs(caption = "Comparison of incarceration proportion of Black individuals in Wyoming")
-}
+} #Plotting function creates map of Wyoming
 #----------------------------------------------------------------------------#
 
