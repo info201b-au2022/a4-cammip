@@ -7,9 +7,6 @@ incarceration_trends <- read.csv(
   stringsAsFactors = F
 )
 
-View(incarceration_trends)
-
-# The functions might be useful for A4
 source("../source/a4-helpers.R")
 
 ## Section 2  ---- 
@@ -88,7 +85,6 @@ get_year_jail_pop <- function() {
   return(pop_df) 
 }
 
-# This function ... <todo:  update comment>
 plot_jail_pop_for_us <- function()  {
   data <- get_year_jail_pop()
   chart <- ggplot(data = data) +

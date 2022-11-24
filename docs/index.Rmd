@@ -11,10 +11,10 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-Include a short abstract (about 50 words)
+This report exposes **patterns of inequality** in incarceration data through data wrangling and data visualizations. The issue this report will focus on is the unfair treatment of people of color and the unjust system/structures that lead to the unfair treatment. This issue is important because the iSchool has a very diverse body of students, so any student/faculty member could be affected by these patterns of inequality.
 
 ## Section 1: Introduction 
-[TODO]
+This report will analyze data on **incarceration**. The data used in this report has been collected by the _Vera Institute._ The data I will use is titled _incarceration_trends.csv,_ which can be found on the Vera Institute’s Github repository. The data collected contains detailed variables about the population and jail population in each state, along with the counties in each state. The Vera Institute collected this data because it has the goal of disrupting and terminating unjust, racist systems that affect unjust criminalization of immigrants, people of color, and the economically disadvantaged. By using the data collected by the Vera Institute, I will use data analysis and visualization skills to display patterns of inequality in the data. One main pattern that is expected to be revealed in the data is the disproportionate incarceration of people of color. There are many different factors that lead to this issue, which all stem from **racism** and prejudice. 
 
 ## Section 2: Data Summary 
 ```{r}

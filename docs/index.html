@@ -359,17 +359,44 @@ display: none;
 
 <pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 4.2.2</code></pre>
 <pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.2.2</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.</code></pre>
 <div id="abstract" class="section level2">
 <h2>Abstract</h2>
-<p>Include a short abstract (about 50 words)</p>
+<p>This report exposes <strong>patterns of inequality</strong> in
+incarceration data through data wrangling and data visualizations. The
+issue this report will focus on is the unfair treatment of people of
+color and the unjust system/structures that lead to the unfair
+treatment. This issue is important because the iSchool has a very
+diverse body of students, so any student/faculty member could be
+affected by these patterns of inequality.</p>
 </div>
 <div id="section-1-introduction" class="section level2">
 <h2>Section 1: Introduction</h2>
-<p>[TODO]</p>
+<p>This report will analyze data on incarceration. The data used in this
+report has been collected by the <em>Vera Institute.</em> The data I
+will use is titled <em>incarceration_trends.csv,</em> which can be found
+on the Vera Institute’s Github repository. The data collected contains
+detailed variables about the population and jail population in each
+state, along with the counties in each state. The Vera Institute
+collected this data because it has the goal of disrupting and
+terminating unjust, racist systems that affect unjust criminalization of
+immigrants, people of color, and the economically disadvantaged. By
+using the data collected by the Vera Institute, I will use data analysis
+and visualization skills to display patterns of inequality in the data.
+One main pattern that is expected to be revealed in the data is the
+disproportionate incarceration of people of color. There are many
+different factors that lead to this issue, which all stem from racism
+and prejudice.</p>
 </div>
 <div id="section-2-data-summary" class="section level2">
 <h2>Section 2: Data Summary</h2>
-<p>[TODO]</p>
+<pre class="r"><code>highest_race()</code></pre>
+<pre><code>## [1] &quot;black_prop&quot;</code></pre>
+<pre class="r"><code>highest_state()</code></pre>
+<pre><code>## [1] &quot;WY&quot;</code></pre>
+<pre class="r"><code>wa_highest_county()</code></pre>
+<pre><code>## [1] &quot;King County&quot;</code></pre>
 </div>
 <div id="section-3-growth-of-the-u.s.-prison-population" class="section level2">
 <h2>Section 3: Growth of the U.S. Prison Population</h2>
