@@ -65,13 +65,15 @@ highest_state <- function() {
 #of the race found in the function above
 
 highest_county <- function() {
-  wy_counties <- incarceration_trends %>%
+  wy <- incarceration_trends %>%
     filter(year == 2018, state == highest_state()) %>%
-    select(county_name, total_jail_pop) %>%
-    filter(total_jail_pop == max(total_jail_pop)) %>%
+    select(state, county_name, black_pop_15to64, black_jail_pop) %>%
+    mutate(prop = black_jail_pop / black_pop_15to64) %>%
+    filter(prop == max(prop)) %>%
     pull(county_name)
-  return(wy_counties)
+  return(wy)
 } #This function finds the county in WY with the highest jail population
+
 #----------------------------------------------------------------------------#
 
 ## Section 3  ---- 
@@ -145,28 +147,30 @@ plot_prop_data <- function(){
 
 ## Section 6  ---- 
 #----------------------------------------------------------------------------#
+wy_df <- read.csv(file = "https://raw.githubusercontent.com/info201b-au2022/a4-cammip/main/source/wy_trends.csv",
+                  stringsAsFactors = F)
+wy_df <- wy_df %>%
+  rename(county_name = X_name)
+
 get_state_data <- function() {
-  #get data
+  counties_shape <- map_data("county") %>%
+    rename(state = "region", county_name = "subregion") %>%
+    filter(state == "wyoming") %>%
+    select(-state) %>%
+    left_join(wy_df, by = "county_name")
+  return(counties_shape)
 }
 
-plot_state_data <- function() {
-  #plot
+plot_wy_data <- function() {
+  ggplot(get_state_data()) +
+    geom_polygon(
+      mapping = aes(x = long, y = lat, group = group, fill = black_prop),
+      color = "white",
+      linewidth = .1
+    ) + coord_map() +
+    scale_fill_continuous(low = "132B43", high = "Red") +
+    labs(fill = "Proportion") +
+    labs(caption = "Comparison of incarceration proportion of Black individuals in Wyoming")
 }
-
-wa_trends <- incarceration_trends %>%
-  select(year, fips, state, county_name, black_pop_15to64, black_jail_pop) %>%
-  filter(state == "WA", year == 2018)
-View(wa_trends)
-
-state_shape <- map_data("state")
-
-ggplot(state_shape) +
-  geom_polygon(
-    mapping = aes(x = long, y = lat, group = group),
-    color = "white", # show state outlines
-    linewidth = .1        # thinly stroked
-) + coord_map()
-
-
 #----------------------------------------------------------------------------#
 

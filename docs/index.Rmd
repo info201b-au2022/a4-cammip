@@ -21,14 +21,14 @@ In the data, I have found three values and answer these questions:
 
 * Which race has the highest jail proportion as of the most recent year?
 
-I created a function called highest_race(), which calculated the race with the highest prison proportion in the United States. Instead of finding the race with the highest prison population, I decided to work with proportions since there is not an equal distribution of residents of different races in each state. The main benefit of using proportions is that proportions take population difference into account. The highest_race() function found that black individuals had the highest jail proportion.
+I created a function called highest_race(), which calculated the race with the highest prison proportion in the United States. Instead of finding the race with the highest prison population, I decided to work with proportions since there is not an equal distribution of residents of different races in each state. The main benefit of using proportions is that proportions take population difference into account. The highest_race() function found that Black individuals had the highest jail proportion.
 ```{r}
 highest_race()
 ```
 
 * Which state has the highest jail proportion of the race found in the last question?
 
-Using the result from the question above, I created the highest_state() function to find the state with the highest proportion of black people in jail. The result showed that Wyoming was the state with the highest black jail proportion. 
+Using the result from the question above, I created the highest_state() function to find the state with the highest proportion of Black people in jail. The result showed that Wyoming was the state with the highest Black jail proportion. 
 ```{r}
 highest_state()
 ```
@@ -36,7 +36,7 @@ highest_state()
 
 * What county in the state found above has the highest jail proportion of black individuals?
 
-In the question above, the results showed that Wyoming had the highest proportion of black people in jail. To dig deeper, I created another function that found the county in Wyoming with the highest proportion, which came out to be Natrona County. After doing further research, I found that Natrona County is considered the "poorest" county in Wyoming (Rossi, 2022). 
+In the question above, the results showed that Wyoming had the highest proportion of Black people in jail. To dig deeper, I created another function that found the county in Wyoming with the highest proportion, which came out to be Campbell County. After doing further research, I found that Campbell County is one of the counties with the lowest average income in Wyoming. 
 
 ```{r}
 highest_county()
@@ -64,11 +64,9 @@ plot_prop_data()
 
 This grouped bar chart compares the jail proportion of Black and White people in each region. The graph clearly shows that in every region, there is a higher proportion of Black individuals in jail compared to White individuals. In the West, 0.9% of Black people are incarcerated, while 0.2% of White people are incarcerated. 
 
-## Section 6: <a map shows potential patterns of inequality that vary geographically>
-[TODO]
+## Section 6: 
+```{r echo = F, message = F}
+plot_wy_data()
+```
 
-
-## Resources:
-
-Rossi, A. Forbes Marks Natrona County As The Poorest County in Wyoming. (2022). Big Horn Radio Network. https://mybighornbasin.com/forbes-marks-natrona-county-as-poorest-county-in-wyoming/ 
-
+This map displays the counties in Wyoming. It answers the question: what county in Wyoming has the highest proportion of incarcerated Black individuals? The map displays counties in a range of colors from blue to red. Counties in blue have a low proportion of incarcerated black people, and red represents a high proportion. The map shows that Campbell County has the highest proportion, which was also shown in section 2 with simple data wrangling. 
